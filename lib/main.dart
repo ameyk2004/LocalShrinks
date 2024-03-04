@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
       title: 'Local Shrinks App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Colors.white
+        ),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
