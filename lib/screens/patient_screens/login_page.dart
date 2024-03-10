@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:local_shrinks/screens/patient_screens/signup_page.dart';
+import 'package:local_shrinks/services/auth/auth_gate.dart';
+import 'package:local_shrinks/services/auth/auth_services.dart';
 import 'package:local_shrinks/utils/colors.dart';
 
 import '../../utils/widgets/custom_textfield.dart';
@@ -18,6 +20,25 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  AuthService authService = AuthService();
+
+  void login() async
+  {
+
+    final authService = AuthService();
+
+    try{
+      await authService.loginEmailPassword(emailController.text.toString(), passwordController.text.toString());
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>AuthGate()));
+    }
+    catch(e)
+    {
+      showDialog(context: context, builder: (context) => AlertDialog(
+        title: Text(e.toString()),
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,62 +88,65 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     SizedBox(height: 20,),
-                    Material(
-                      elevation: 10,
-                      borderRadius: BorderRadius.circular(50),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.all(20),
-                        height: 500,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
 
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text("Login", style: AppWidget.headlineTextStyle(),),
-                                SizedBox(height: 30,),
-                                CustomTextField(hintText: "Email", icon: Icon(Icons.email), obscureText: false, textEditingController: emailController,),
-                                SizedBox(height: 15,),
-                                CustomTextField(hintText: "Password", icon: Icon(Icons.no_encryption_rounded), obscureText: true, textEditingController: passwordController,),
+                    Hero(
+                      tag: 'LoginSignUp',
+                      child: Material(
+                        elevation: 10,
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(20),
+                          height: 500,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
 
-                                SizedBox(height: 10,),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Text("Login", style: AppWidget.headlineTextStyle(),),
+                                  SizedBox(height: 30,),
+                                  CustomTextField(hintText: "Email", icon: Icon(Icons.email), obscureText: false, textEditingController: emailController,),
+                                  SizedBox(height: 15,),
+                                  CustomTextField(hintText: "Password", icon: Icon(Icons.no_encryption_rounded), obscureText: true, textEditingController: passwordController,),
 
-                                Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text("Forgot Password ? ", style: AppWidget.lightTextStyle(),)),
+                                  SizedBox(height: 10,),
+
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text("Forgot Password ? ", style: AppWidget.lightTextStyle(),)),
 
 
-                              ],
-                            ),
-
-
-                            Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(20),
-
-                              child: InkWell(
-                                onTap: (){
-                                },
-                                child: Container(
-
-                                  padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: lightPurple,
-                                      borderRadius: BorderRadius.circular(20)
-                                  ),
-                                  child: Text("Login", style: AppWidget.boldTextStyle().copyWith(color: Colors.white,),),
-
-                                ),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
 
+
+                              Material(
+                                elevation: 5,
+                                borderRadius: BorderRadius.circular(20),
+
+                                child: InkWell(
+                                  onTap: login,
+                                  child: Container(
+
+                                    padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: lightPurple,
+                                        borderRadius: BorderRadius.circular(20)
+                                    ),
+                                    child: Text("Login", style: AppWidget.boldTextStyle().copyWith(color: Colors.white,),),
+
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                        ),
                       ),
                     ),
 
