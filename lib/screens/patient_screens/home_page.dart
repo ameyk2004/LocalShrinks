@@ -7,7 +7,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title : Text("Home Page", style: TextStyle(fontSize: 30),),
+        title: Text(
+          "Hello, Shreyas Here",
+          style: TextStyle(fontSize: 30),
+        ),
       ),
     );
   }
