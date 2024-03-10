@@ -1,42 +1,79 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:local_shrinks/screens/patient_screens/signup_page.dart';
 import 'package:local_shrinks/services/auth/auth_gate.dart';
-import 'package:local_shrinks/services/auth/auth_services.dart';
 import 'package:local_shrinks/utils/colors.dart';
-
+import '../../services/auth/auth_services.dart';
 import '../../utils/widgets/custom_textfield.dart';
 import '../../utils/widgets/widget_support.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import 'login_page.dart';
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
-  AuthService authService = AuthService();
+  void signUp() async {
+    AuthService authService = AuthService();
 
-  void login() async
-  {
+    if (passwordController.text.isEmpty ||
+        nameController.text.isEmpty ||
+        passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Fill all Fields"),
+        ),
+      );
+    } else {
+      try {
+        await authService.signUpWithEmailPassword(
+          email: emailController.text.toString(),
+          password: passwordController.text.toString(),
+          name: nameController.text.toString(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Registered Successfully"),
+          ),
+        );
 
-    final authService = AuthService();
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AuthGate()));
 
-    try{
-      await authService.loginEmailPassword(emailController.text.toString(), passwordController.text.toString());
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>AuthGate()));
-    }
-    catch(e)
-    {
-      showDialog(context: context, builder: (context) => AlertDialog(
-        title: Text(e.toString()),
-      ));
+        // No need to call setState here, as the authentication state change
+        // will automatically trigger a rebuild in widgets listening to the authStateChanges stream
+      } catch (e) {
+        String errorMessage = "An error occurred, please try again later."; // Default error message
+        switch (e.toString()) {
+          case 'weak-password':
+            errorMessage = 'The password provided is too weak.';
+            break;
+          case 'email-already-in-use':
+            errorMessage = 'The account already exists for that email.';
+            break;
+          case 'invalid-email':
+            errorMessage = 'The email address is invalid.';
+            break;
+          case 'operation-not-allowed':
+            errorMessage = 'Error occurred during sign up.';
+            break;
+          default:
+            errorMessage = 'An error occurred while signing up.';
+            break;
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+          ),
+        );
+      }
     }
   }
 
@@ -48,17 +85,20 @@ class _LoginPageState extends State<LoginPage> {
           physics: BouncingScrollPhysics(),
           child: Stack(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.5,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          lightPurple,
-                          seaBlue,
-                        ])),
+              Hero(
+                tag : 'gradient',
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            lightPurple,
+                            seaBlue,
+                          ])),
+                ),
               ),
               Container(
                 margin:
@@ -76,9 +116,11 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Image.asset("assets/images/logo.png",
                     //     width: MediaQuery.of(context).size.width/1.3),
+
                     Container(
                       width: MediaQuery.of(context).size.width/1.3,
                       margin: EdgeInsets.only(top: 30),
@@ -86,9 +128,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       child: Text("Local Shrinks", style: AppWidget.headlineTextStyle().copyWith(fontSize: 30),),
                     ),
-
                     SizedBox(height: 20,),
-
                     Hero(
                       tag: 'LoginSignUp',
                       child: Material(
@@ -108,18 +148,15 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Column(
                                 children: [
-                                  Text("Login", style: AppWidget.headlineTextStyle(),),
+                                  Text("Sign Up", style: AppWidget.headlineTextStyle(),),
                                   SizedBox(height: 30,),
-                                  CustomTextField(hintText: "Email", icon: Icon(Icons.email), obscureText: false, textEditingController: emailController,),
+                                  CustomTextField(hintText: "Name", icon: Icon(Icons.person_outline), obscureText: false, textEditingController: nameController, ),
                                   SizedBox(height: 15,),
-                                  CustomTextField(hintText: "Password", icon: Icon(Icons.no_encryption_rounded), obscureText: true, textEditingController: passwordController,),
+                                  CustomTextField(hintText: "Email", icon: Icon(Icons.email_outlined), obscureText: false, textEditingController: emailController,),
+                                  SizedBox(height: 15,),
+                                  CustomTextField(hintText: "Password", icon: Icon(Icons.lock_outlined), obscureText: true, textEditingController: passwordController,),
 
                                   SizedBox(height: 10,),
-
-                                  Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text("Forgot Password ? ", style: AppWidget.lightTextStyle(),)),
-
 
                                 ],
                               ),
@@ -130,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(20),
 
                                 child: InkWell(
-                                  onTap: login,
+                                  onTap: signUp,
                                   child: Container(
 
                                     padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
@@ -138,14 +175,13 @@ class _LoginPageState extends State<LoginPage> {
                                         color: lightPurple,
                                         borderRadius: BorderRadius.circular(20)
                                     ),
-                                    child: Text("Login", style: AppWidget.boldTextStyle().copyWith(color: Colors.white,),),
+                                    child: Text("Sign Up", style: AppWidget.boldTextStyle().copyWith(color: Colors.white,),),
 
                                   ),
                                 ),
                               )
                             ],
                           ),
-
                         ),
                       ),
                     ),
@@ -158,18 +194,18 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
 
                         children: [
-                          Text("Don't Have an Account ?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                          Text("Aldready Have an Account ?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
                           GestureDetector(
-                              onTap: (){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SignUpPage()));
+                              onTap: ()
+                              {
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
                               },
-                              child: Text(" Sign Up ", style: TextStyle(fontSize: 18, color: lightPurple))),
+                              child: Text("  Login Now", style: TextStyle(fontSize: 18, color: lightPurple))),
                         ],
                       ),
-                    )
+                    ),
+
                   ],
-
-
                 ),
               ),
             ],

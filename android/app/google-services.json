@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1021467189728",
+    "project_id": "local-shrinks",
+    "storage_bucket": "local-shrinks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021467189728:android:402f68c078ca11b916cb85",
+        "android_client_info": {
+          "package_name": "com.localshrinks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnic6JsOytZaQ24WgNOoLaMg-e9PWzvE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
