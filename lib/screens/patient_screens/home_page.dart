@@ -17,7 +17,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title : Text("Home Page", style: TextStyle(fontSize: 30),),
+        title: Text(
+          "Hello, Shreyas Here",
+          style: TextStyle(fontSize: 30),
+        ),
       ),
       drawer: CustomMenuDrawer(profile_pic: 'https://p7.hiclipart.com/preview/481/915/760/computer-icons-user-avatar-woman-avatar.jpg', userName: authService.getCurrentUser()!.email!,),
     );
