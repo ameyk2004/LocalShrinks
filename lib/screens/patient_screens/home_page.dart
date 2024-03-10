@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Hello, Shreyas Here",
+          "Hello, ameya Here",
           style: TextStyle(fontSize: 30),
         ),
       ),
