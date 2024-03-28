@@ -188,25 +188,25 @@ Widget dailybottomTitleWidgets(double value, TitleMeta meta) {
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = const Text('04;00', style: style);
+      text = const Text('00:00', style: style);
       break;
     case 1:
-      text = const Text('10:00', style: style);
+      text = const Text('04:00', style: style);
       break;
     case 2:
-      text = const Text('12:00', style: style);
+      text = const Text('08:00', style: style);
       break;
     case 3:
-      text = const Text('16:00', style: style);
+      text = const Text('12:00', style: style);
       break;
     case 4:
-      text = const Text('20:00', style: style);
+      text = const Text('16:00', style: style);
       break;
     case 5:
-      text = const Text('24:00', style: style);
+      text = const Text('20:00', style: style);
       break;
     default:
-      text = const Text('', style: style);
+      text = const Text('24:00', style: style);
       break;
   }
   return SideTitleWidget(
@@ -327,7 +327,9 @@ LineChartData dailyData() {
           FlSpot(2, 3), // Wed
           FlSpot(3, 1), // Thu
           FlSpot(4, 3), // Fri
-          FlSpot(5, 4), // Sat
+          FlSpot(5, 4),
+          FlSpot(6, 4), // Sat
+          // Sat
         ],
         isCurved: true,
         color: Color.fromARGB(255, 82, 5, 96),
