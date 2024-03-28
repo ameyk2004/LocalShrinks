@@ -63,6 +63,12 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
     //     builder: (context) => MoodStatsPage(selectedMood: selectedMood),
     //   ),
     // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MoodStatsPage(),
+      ),
+    );
   }
 
   @override
