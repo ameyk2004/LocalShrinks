@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_shrinks/services/auth/auth_services.dart';
+import './moodtracker_page.dart';
 
 import '../../utils/widgets/menu_drawer.dart';
 
@@ -108,6 +109,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return MoodTrackerPage();
+                          }));
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(250, 120, 98, 215),

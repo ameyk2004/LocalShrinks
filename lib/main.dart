@@ -3,6 +3,7 @@ import 'package:local_shrinks/screens/patient_screens/home_page.dart';
 import 'package:local_shrinks/screens/patient_screens/login_page.dart';
 import 'package:local_shrinks/services/auth/auth_gate.dart';
 import 'firebase_options.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
