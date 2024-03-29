@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:local_shrinks/screens/doctor_screens/register_doctor_screen.dart';
 import 'package:local_shrinks/services/auth/auth_gate.dart';
 import 'package:local_shrinks/utils/colors.dart';
 import '../../services/auth/auth_services.dart';
@@ -44,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
 
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AuthGate()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AuthWrapper(tutorial: false)));
 
         // No need to call setState here, as the authentication state change
         // will automatically trigger a rebuild in widgets listening to the authStateChanges stream
@@ -201,6 +202,21 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
                               },
                               child: Text("  Login Now", style: TextStyle(fontSize: 18, color: lightPurple))),
+                        ],
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+
+                        children: [
+                          Text("Are You Doctor ?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                          GestureDetector(
+                              onTap: ()
+                              {
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>DoctorRegistrationPage()));
+                              },
+                              child: Text("  Register Here", style: TextStyle(fontSize: 18, color: lightPurple))),
                         ],
                       ),
                     ),

@@ -26,6 +26,12 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSCameraUsageDescription</key>
+    	<string>We need access to your camera to capture photos.</string>
+    	<key>NSSpeechRecognitionUsageDescription</key>
+        	<string>We need access to your speech to get chatbot response</string>
+    	<key>NSMicrophoneUsageDescription</key>
+    	<string>We need access to your microphone for audio recording.</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>

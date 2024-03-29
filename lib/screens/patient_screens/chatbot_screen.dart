@@ -78,10 +78,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
   TextEditingController textEditingController = TextEditingController();
 
   Future<void> sendPromptToChatBot(String prompt) async {
-    Uri url = Uri.parse(CHATBOT_URL);
+    Uri url = Uri.parse("https://techfiesta-web.vercel.app/api/mobile");
     final Timestamp timestamp = Timestamp.now();
 
-    String jsonBody = jsonEncode({'prompt': prompt});
+    String jsonBody = jsonEncode({'question': prompt, });
     print(prompt);
     _isLoading = true;
     final response = await http.post(
@@ -93,8 +93,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
     if (response.statusCode == 200) {
       print(response.body);
       final ChatBotData = jsonDecode(response.body);
-      print(ChatBotData["response"]);
-      chatbotResponse = ChatBotData["response"];
+      print(ChatBotData["content"]);
+      chatbotResponse = ChatBotData["content"];
 
       chat_history.add({
         "prompt": prompt,
@@ -145,7 +145,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                 ),
               ),
               SizedBox(height: 10,),
-              Text("Scalp Smart Chatbot", style: AppWidget.boldTextStyle().copyWith(fontSize: MediaQuery.of(context).size.height*0.028, color: Colors.white))
+              Text("Local Shrinks Chatbot", style: AppWidget.boldTextStyle().copyWith(fontSize: MediaQuery.of(context).size.height*0.028, color: Colors.white))
             ],
           ),
           leading: Align(

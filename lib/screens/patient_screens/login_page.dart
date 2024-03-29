@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try{
       await authService.loginEmailPassword(emailController.text.toString(), passwordController.text.toString());
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>AuthGate()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>AuthWrapper(tutorial: false)));
     }
     catch(e)
     {

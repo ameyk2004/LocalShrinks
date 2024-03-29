@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:local_shrinks/screens/patient_screens/breathing_excersise_screen.dart';
+import 'package:local_shrinks/screens/patient_screens/bubble_game.dart';
 import 'package:local_shrinks/screens/patient_screens/chatbot_screen.dart';
+import 'package:local_shrinks/screens/patient_screens/doctor_details_page.dart';
+import 'package:local_shrinks/screens/patient_screens/finalQuestionaire.dart';
+import 'package:local_shrinks/screens/patient_screens/mood_tracker.dart';
+import 'package:local_shrinks/screens/patient_screens/questionaire_page.dart';
 import 'package:local_shrinks/services/auth/auth_services.dart';
 
 import '../../utils/colors.dart';
@@ -24,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
     // Adjusting sizes based on screen dimensions
     double buttonWidth = screenWidth * 0.4; // 40% of screen width
-    double buttonHeight = screenHeight * 0.10; // 12% of screen height
+    double buttonHeight = screenHeight * 0.12; // 12% of screen height
     double imageSize = screenWidth * 0.50; // 45% of screen width for the image
     double padding = screenWidth * 0.05; // 5% of screen width for padding
 
@@ -32,6 +38,11 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BreathingPage()));
+          }, icon: Icon(Icons.timelapse))
+        ],
       ),
       body: Container(
         height: screenHeight,
@@ -99,6 +110,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: ()
+                        {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MoodTrackerPage()));
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: Color(0xffb7862D7),
@@ -128,6 +143,10 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
+                        onTap: ()
+                        {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>QuestionairePage()));
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: const Color(0xffb7862D7),
@@ -151,6 +170,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DoctorDetailsPage()));
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: const Color(0xffb7862D7),
@@ -163,6 +185,65 @@ class _HomePageState extends State<HomePage> {
                           child: Center(
                             child: const Text(
                               'Therapists',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: ()
+                        {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BreathingPage()));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffb7862D7),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          width: buttonWidth, // Dynamically sized button width
+                          height:
+                          buttonHeight, // Dynamically sized button height
+                          padding: EdgeInsets.all(12),
+                          child: Center(
+                            child: const Text(
+                              'Breathing Exercise',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BubbleGamePage()));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffb7862D7),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          width: buttonWidth, // Dynamically sized button width
+                          height:
+                          buttonHeight, // Dynamically sized button height
+                          padding: EdgeInsets.all(12),
+                          child: Center(
+                            child: const Text(
+                              textAlign: TextAlign.center,
+                              'Bubble Game',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,

@@ -1,23 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:local_shrinks/screens/patient_screens/signup_page.dart';
-
+import '../../screens/admin_screens/admin_home_page.dart';
+import '../../screens/doctor_screens/doctor_home_screen.dart';
 import '../../screens/patient_screens/home_page.dart';
 import '../firestore services/database.dart';
 
-class AuthGate extends StatefulWidget {
-  const AuthGate({super.key});
+class AuthWrapper extends StatefulWidget {
+  final bool tutorial;
+  const AuthWrapper({super.key, required this.tutorial});
 
   @override
-  State<AuthGate> createState() => _AuthGateState();
+  State<AuthWrapper> createState() => _AuthWrapperState();
 }
 
-class _AuthGateState extends State<AuthGate> {
+class _AuthWrapperState extends State<AuthWrapper> {
+
 
   @override
   void initState() {
     super.initState();
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +53,13 @@ class _AuthGateState extends State<AuthGate> {
               else {
 
                 if (roleSnapshot.data == "Patient") {
-                  return const HomePage(); // User is a patient
+                  return HomePage(); // User is a patient
                 } else if(roleSnapshot.data == "Doctor"){
-                  return const Scaffold();
+                  return const DoctorHomePage();
                 }
                 else
                 {
-                  return const Scaffold();
+                  return const AdminPage();
                 }
               }
             },
